@@ -19,6 +19,21 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	//Add Components to Pawn
+	UPROPERTY()
+	// Forward declaration of Capsule Component pointer
+	class UCapsuleComponent* CapsuleComp; 
+	
+	UPROPERTY()
+	UStaticMeshComponent* BaseMesh; 
+
+	UPROPERTY()
+	UStaticMeshComponent* TurretMesh; 
+
+	UPROPERTY()
+	USceneComponent* ProjectileSpawnPoint; 
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

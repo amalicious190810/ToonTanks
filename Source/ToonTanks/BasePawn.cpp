@@ -2,12 +2,29 @@
 
 
 #include "BasePawn.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	// Construct Capsule Component for collisions and save pointer to CapsuleComp
+	// Assigne CapsuleComp to Root Component
+	CapsuleComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider")); 
+	RootComponent = CapsuleComp;
+
+	// Construct Tank Static Mesh Components and attach to CapsuleComp/BaseMesh
+	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
+	BaseMesh->SetupAttachment(CapsuleComp);  
+
+	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh")); 
+	TurretMesh->SetupAttachment(BaseMesh); 
+
+	// Construct Projectile Scene Component and attach to Turret Mesh
+	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point")); 
+	ProjectileSpawnPoint->SetupAttachment(TurretMesh); 
 
 }
 
@@ -31,4 +48,3 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
-
