@@ -3,6 +3,7 @@
 
 #include "BasePawn.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -28,23 +29,21 @@ ABasePawn::ABasePawn()
 
 }
 
-// Called when the game starts or when spawned
-void ABasePawn::BeginPlay()
+// Function to rotate Turret Meshes on Tank and AI Turrets
+void ABasePawn::RotateTurret(FVector LookAtTarget)
 {
-	Super::BeginPlay();
-	
-}
+	// Vector from turret component to trace hit result under mouse cursor
+	FVector ToTarget = LookAtTarget - TurretMesh->GetComponentLocation(); 
 
-// Called every frame
-void ABasePawn::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+	// Rotator to roatate only on Yaw towards ToTarget Vector
+	FRotator LookAtRotation = FRotator(0.f, ToTarget.Rotation().Yaw, 0.f);
 
-}
-
-// Called to bind functionality to input
-void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	// Set Rotation for TurretMesh with interpolate for smooth rotation
+	TurretMesh->SetWorldRotation(
+		FMath::RInterpTo(
+			TurretMesh->GetComponentRotation(), 
+			LookAtRotation, 
+			UGameplayStatics::GetWorldDeltaSeconds(this), 
+			5.f)
+		); 
 }
