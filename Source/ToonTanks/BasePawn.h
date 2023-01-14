@@ -17,8 +17,11 @@ public:
 
 protected: 
 
-	// Function to rotate Turret Meshes on Tank and AI Turret
+	// Function to rotate Turret Meshes on Tank and Tower Classes
 	void RotateTurret(FVector LookAtTarget); 
+
+	// Function to fire projectiles in Tank and Tower Classes
+	void Fire(); 
 
 private:
 	//Add Components to Pawn

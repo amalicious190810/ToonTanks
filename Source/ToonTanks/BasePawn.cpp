@@ -47,3 +47,20 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 			5.f)
 		); 
 }
+
+// Function to Fire projectiles on Tank and Tower
+void ABasePawn::Fire()
+{
+	   // Get the Projectile's spawn point location
+	   FVector ProjectileSpawnPointLocation = ProjectileSpawnPoint->GetComponentLocation();
+	   
+	   // Draw a Debug Sphere using trace result under cursor
+        DrawDebugSphere(
+        GetWorld(), 
+        ProjectileSpawnPointLocation, 
+        25.f, 
+        12, 
+        FColor::Red, 
+        false, 
+        3.f); 
+}

@@ -30,4 +30,12 @@ private:
 	// Create FireRange variable for distance limit of when Tower can fire
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float FireRange = 700.f; 
+
+	// Timer Parameters for Tower Fire SetTimer()
+	FTimerHandle FireRateTimerHandle; 
+	float FireRate =2.f; 
+	void CheckFireCondition(); 
+
+	// Refactor check if tank in range of tower
+	bool InFireRange();
 };

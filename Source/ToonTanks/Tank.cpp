@@ -33,6 +33,9 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
     // Binds Turn function to Turn Axis Mapping
     PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn); 
+
+    // Binds Fire function to Fire Action Mapping
+    PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATank::Fire);
 }
 
 // Called every frame
@@ -47,16 +50,6 @@ void ATank::Tick(float DeltaTime)
             ECollisionChannel::ECC_Visibility, 
             false, 
             HitResult);
-
-        // Draw a Debug Sphere using trace result under cursor
-        DrawDebugSphere(
-        GetWorld(), 
-        HitResult.ImpactPoint, 
-        25.f, 
-        12, 
-        FColor::Red, 
-        false, 
-        -1.f); 
 
         // Call RotateTurret Function from BasePawn to rotate towards HitResult.ImpactPoint by passing it in
         RotateTurret(HitResult.ImpactPoint); 
