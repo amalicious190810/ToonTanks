@@ -25,6 +25,18 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* ProjectileMesh; 
 
+	// Forward declare a Projectile Movement Component because this component is not included by default
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	class UProjectileMovementComponent* ProjectileMovementComponent; 
+
+	// Create callback function for hit event
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit); 
+
+	// Declare Damage variable fo pass into ApplyDamage function in UGameplayStatics 
+	UPROPERTY(EditAnywhere)
+	float Damage = 50.f; 
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -4,6 +4,7 @@
 #include "BasePawn.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Projectile.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -51,16 +52,11 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 // Function to Fire projectiles on Tank and Tower
 void ABasePawn::Fire()
 {
-	   // Get the Projectile's spawn point location
-	   FVector ProjectileSpawnPointLocation = ProjectileSpawnPoint->GetComponentLocation();
-	   
-	   // Draw a Debug Sphere using trace result under cursor
-        DrawDebugSphere(
-        GetWorld(), 
-        ProjectileSpawnPointLocation, 
-        25.f, 
-        12, 
-        FColor::Red, 
-        false, 
-        3.f); 
+	   // Get the Projectile's spawn point location and rotation
+	   FVector Location = ProjectileSpawnPoint->GetComponentLocation();
+	   FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
+
+	   // Spawn the Projectile and dynamically set the owner pawn of each projectile to dynamically get InstigatorController for ApplyDamage in Projectile.cpp
+	   auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation); 
+	   Projectile->SetOwner(this); 
 }
