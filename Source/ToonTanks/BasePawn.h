@@ -15,10 +15,16 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
+	// Function to destroy dead pawns called from Game Mode
+	void HandleDestruction(); 
+
 protected: 
 
-	// Function to rotate Turret Meshes on Tank and AI Turret
+	// Function to rotate Turret Meshes on Tank and Tower Classes
 	void RotateTurret(FVector LookAtTarget); 
+
+	// Function to fire projectiles in Tank and Tower Classes
+	void Fire(); 
 
 private:
 	//Add Components to Pawn
@@ -34,5 +40,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* ProjectileSpawnPoint; 
+
+	// Spawn Projectile, a C++ variable that represents a class type even if it's a BP class type
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	TSubclassOf<class AProjectile> ProjectileClass; 
 
 };
