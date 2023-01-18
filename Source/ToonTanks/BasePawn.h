@@ -15,6 +15,9 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
+	// Function to destroy dead pawns called from Game Mode
+	void HandleDestruction(); 
+
 protected: 
 
 	// Function to rotate Turret Meshes on Tank and Tower Classes

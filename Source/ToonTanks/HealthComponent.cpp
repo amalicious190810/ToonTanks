@@ -2,6 +2,8 @@
 
 
 #include "HealthComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "ToonTanksGameMode.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -25,6 +27,9 @@ void UHealthComponent::BeginPlay()
 	// Bind DamageTaken callback function to OnTakeAnyDamage delegate (already exists on pawn that owns health component)
 	// Now when damage events are generated, OnTakeAnyDamage delegate will broadcast to all functions on inovcation list, including DamageTaken function, to be called
 	GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::DamageTaken);
+
+	// Assign current game mode to ToonTanksGameMode
+	ToonTanksGameMode = Cast<AToonTanksGameMode>(UGameplayStatics::GetGameMode(this)); 
 }
 
 
@@ -45,6 +50,13 @@ void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDa
 	// Subtract damage from DamagedActor's Health variable
 	Health -= Damage;
 
-	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health); 
+	// Call ActorDied if health is less than or equal to 0
+	if (Health <= 0.f && ToonTanksGameMode)
+	{
+		ToonTanksGameMode->ActorDied(DamagedActor); 
+	}
 	  
+	// TODO: Debug Tank not reducing in health
+	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
+
 }

@@ -30,6 +30,13 @@ ABasePawn::ABasePawn()
 
 }
 
+// Define function to handle destruction when tower or tank pawns die
+void ABasePawn::HandleDestruction()
+{
+	// TODO: Visual/Sound Effects with pawn death
+	
+}
+
 // Function to rotate Turret Meshes on Tank and AI Turrets
 void ABasePawn::RotateTurret(FVector LookAtTarget)
 {

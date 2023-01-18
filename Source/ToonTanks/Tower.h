@@ -18,6 +18,9 @@ public:
 
 	virtual void Tick(float DeltaTime) override; 
 
+	// Function to destroy dead Towers called from Game Mode
+	void HandleDestruction();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

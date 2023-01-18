@@ -33,6 +33,9 @@ private:
 	UFUNCTION()
 	void DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* Instigator, AActor* DamageCauser); 
 
+	// Forward declare variable for AToonTanksGameMode to call ActorDied() from game mode when health of actor reaches zero
+	class AToonTanksGameMode* ToonTanksGameMode;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

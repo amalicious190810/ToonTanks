@@ -18,6 +18,16 @@ void ATower::Tick(float DeltaTime)
 
 }
 
+// Define function to handle destruction when tower pawns die and called by game mode
+void ATower::HandleDestruction()
+{
+    // Call super version/BasePawn Destruction function with visual/sound effects of dying
+    Super::HandleDestruction(); 
+
+    // Destroy the tower
+    Destroy(); 
+}
+
 void ATower::BeginPlay()
 {
     Super::BeginPlay(); 

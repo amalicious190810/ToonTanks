@@ -43,10 +43,10 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-    if (PlayerControllerRef)
+    if (TankPlayerController)
     {
         FHitResult HitResult;
-        PlayerControllerRef->GetHitResultUnderCursor(
+        TankPlayerController->GetHitResultUnderCursor(
             ECollisionChannel::ECC_Visibility, 
             false, 
             HitResult);
@@ -57,13 +57,26 @@ void ATank::Tick(float DeltaTime)
     }
 }
 
+// Define function to handle destruction when tank pawn dies and called by game mode
+void ATank::HandleDestruction()
+{
+    // Call super version/BasePawn Destruction function with visual/sound effects of dying
+    Super::HandleDestruction(); 
+
+    // Hide the tank instead of destroying it so that tank pawn can't be seen anymore but camera can keep being possessed 
+    SetActorHiddenInGame(true); 
+
+    // Disable tank ticking so tank pawn can't be moved anymore
+    SetActorTickEnabled(false); 
+}
+
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	
     // GetController returns AController Object, a parent object of APlayerController, so it can be cast to an APlayerController type to be used in variable PlayerControllerRef
-    PlayerControllerRef = Cast<APlayerController>(GetController()); 
+    TankPlayerController = Cast<APlayerController>(GetController()); 
 
 }
 
